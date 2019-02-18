@@ -1,0 +1,14 @@
+language: python
+python:
+- '3.6'
+install:
+- pip install -r requirements.txt
+script:
+- pytest
+deploy:
+  provider: heroku
+  app: dunamis-database-api
+  on:
+    repo: teamdunamis/database-api
+  api_key:
+    secure: zrwy4HUHa4Sh/qDWT9ikvKseM/a2F5+c7U1Koh8cvvpvIqCHw76/2QWdCKsUBOvVHoWzlk6Tvo130dtUAZRolF+aGvCzMRRJQc2uSjbFlABxF2Swoy7tEAifvre23yWxTwWpWeEpYbg88Aa3LpYK+epT3den4XZdzjsZXWsho5ZVTUYC/Gf5iFTge7vghZaRvC6P/1HD/ny9E5NMph1vAKQk36hHATJWp1cAXo8rIg7q81MYNZLNSngswn2pN08xOweVBZitacid6OZF3G+o3+0Yue0+iEUOeLYsDXG0wcAy+p8xU2h9UchCQ1ZxmV+32t2p3+kRLeOl3bD5tJm4c293uHTmj6uFP5jh+13EakKk0VcKkwXzUwLry5Wzt7+ZN38tlczlATMU3i9kj6FLlo7spj1pXbYasU/YUPE3iCXVfqenXHvUyx4oIOFsDo1VvJKCCr9oQkRDZlQgw3J4ln6fRFo5EqXsf9yZ4KFn1Kz8+vEDuCwdJBf+jOSNdWP14N9jOqlRicoDkeZ9YBmQ28gOeq11UN4NnvvHeNCM2GkeSnmk3qmVWW8hwHzJyQHFqbbQS+mMa6qFfWNDwrKgLxcBxm/OQCLNesdXV4LrjBIbifygP2l/w6j4T64yZSEkdsZagg1nYJ/NO0DtIhROiggL4U0o4+DjOP7roOJvpDk=
