@@ -43,7 +43,8 @@ class database_control(object):
         #Check if the parameters are valid
         requiered_parameter = ['user_name']
         optional_parameter = []
-        if not self.check_parameter(chat_id, parameter, requiered_parameter, optional_parameter):
+        parameter = self.check_parameter(parameter, requiered_parameter, optional_parameter)
+        if parameter is None:
             error = {'status':ERROR_PARAMETER_NOT_VALID} 
             return error
         
@@ -66,7 +67,8 @@ class database_control(object):
         #Check if the parameters are valid
         requiered_parameter = []
         optional_parameter = ['user_name']
-        if not self.check_parameter(chat_id, parameter, requiered_parameter, optional_parameter):
+        parameter = self.check_parameter(parameter, requiered_parameter, optional_parameter)
+        if parameter is None:
             error = {'status':ERROR_PARAMETER_NOT_VALID}
             return error
         
@@ -98,7 +100,8 @@ class database_control(object):
         #Check if the parameters are valid
         requiered_parameter = ['home_name','gateway_ip']
         optional_parameter = []
-        if not self.check_parameter(chat_id, parameter, requiered_parameter, optional_parameter):
+        parameter = self.check_parameter(parameter, requiered_parameter, optional_parameter)
+        if parameter is None:
             error = {'status':ERROR_PARAMETER_NOT_VALID}
             return error
 
@@ -120,7 +123,8 @@ class database_control(object):
         #Check if the parameters are valid
         requiered_parameter = []
         optional_parameter = []
-        if not self.check_parameter(chat_id, parameter, requiered_parameter, optional_parameter):
+        parameter = self.check_parameter(parameter, requiered_parameter, optional_parameter)
+        if parameter is None:
             error = {'status':ERROR_PARAMETER_NOT_VALID}
             return error
 
@@ -151,7 +155,8 @@ class database_control(object):
         #Check if the parameters are valid
         requiered_parameter = ['device_name','device_typ','device_location','home_name']
         optional_parameter = []
-        if not self.check_parameter(chat_id, parameter, requiered_parameter, optional_parameter):
+        parameter = self.check_parameter(parameter, requiered_parameter, optional_parameter)
+        if parameter is None:
             error = {'status':ERROR_PARAMETER_NOT_VALID}
             return error
 
@@ -187,7 +192,8 @@ class database_control(object):
         #Check if parameters are valid
         requiered_parameter = ['device_name']
         optional_parameter = []
-        if not self.check_parameter(chat_id, parameter, requiered_parameter, optional_parameter):
+        parameter = self.check_parameter(parameter, requiered_parameter, optional_parameter)
+        if parameter is None:
             error = {'status':ERROR_PARAMETER_NOT_VALID}
             return error
         
@@ -219,7 +225,8 @@ class database_control(object):
         #Check if parameters are valid
         requiered_parameter = []
         optional_parameter = ['device_name','device_typ','device_location','home_name']
-        if not self.check_parameter(chat_id, parameter, requiered_parameter, optional_parameter):
+        parameter = self.check_parameter(parameter, requiered_parameter, optional_parameter)
+        if parameter is None:
             error = {'status':ERROR_PARAMETER_NOT_VALID}
             return error
         request_allowed = ['device_name','device_location','device_typ','device_owner','device_friends','home_name','home_ower','chat_id','gateway_ip']
@@ -255,7 +262,8 @@ class database_control(object):
         #Check if parameters are valid
         requiered_parameter = []
         optional_parameter = ['home_name','gateway_ip']
-        if not self.check_parameter(chat_id, parameter, requiered_parameter, optional_parameter):
+        parameter = self.check_parameter(parameter, requiered_parameter, optional_parameter)
+        if parameter is None:
             error = {'status':ERROR_PARAMETER_NOT_VALID}
             return error
         request_allowed = ['home_name','gateway_ip','home_owner','home_friends','chat_id']
@@ -289,7 +297,8 @@ class database_control(object):
         #Check if parameters are valid
         requiered_parameter = ['home_name']
         optional_parameter = []
-        if not self.check_parameter(chat_id, parameter, requiered_parameter, optional_parameter):
+        parameter = self.check_parameter(parameter, requiered_parameter, optional_parameter)
+        if parameter is None:
             error = {'status':ERROR_PARAMETER_NOT_VALID}
             return error
         
@@ -319,7 +328,8 @@ class database_control(object):
         #Check if parameters are valid
         requiered_parameter = ['home_name','home_friends']
         optional_parameter = []
-        if not self.check_parameter(chat_id, parameter, requiered_parameter, optional_parameter):
+        parameter = self.check_parameter(parameter, requiered_parameter, optional_parameter)
+        if parameter is None:
             error = {'status':ERROR_PARAMETER_NOT_VALID}
             return error
         
@@ -361,7 +371,8 @@ class database_control(object):
         #Check if parameters are valid
         requiered_parameter = ['home_name','home_friends']
         optional_parameter = []
-        if not self.check_parameter(chat_id, parameter, requiered_parameter, optional_parameter):
+        parmeter = self.check_parameter(parameter, requiered_parameter, optional_parameter)
+        if parameter is None:
             error = {'status':ERROR_PARAMETER_NOT_VALID}
             return error
 
@@ -400,7 +411,8 @@ class database_control(object):
         #Check if parameters are valid
         requiered_parameter = ['device_name','device_friends']
         optional_parameter = []
-        if not self.check_parameter(chat_id, parameter, requiered_parameter, optional_parameter):
+        parameter = self.check_parameter(parameter, requiered_parameter, optional_parameter)
+        if parameter is None:
             error = {'status':ERROR_PARAMETER_NOT_VALID}
             return error
 
@@ -442,7 +454,8 @@ class database_control(object):
         #Check if parameters are valid
         requiered_parameter = ['device_name','device_friends']
         optional_parameter = []
-        if not self.check_parameter(chat_id, parameter, requiered_parameter, optional_parameter):
+        parameter = self.check_parameter(parameter, requiered_parameter, optional_parameter)
+        if parameter is None:
             error = {'status':ERROR_PARAMETER_NOT_VALID}
             return error
 
@@ -477,24 +490,27 @@ class database_control(object):
         return result
 
     #Check if the parameter are all valid
-    def check_parameter(self,chat_id, parameter, requiered_parameter, optional_parameter):
-        if not isinstance(chat_id, str):
-            return False
-        if len(chat_id.encode('utf-8')) > 63:
-            return False
-        for requiered in requiered_parameter:
-            if not requiered in parameter:
-                return False
-        for par in parameter:
-            if len(par.encode('utf-8')) > 63:
-                return False
-            if not (par in requiered_parameter or par in optional_parameter):
-                return False
-        return True
+    def check_parameter(self, parameter, requiered_parameter, optional_parameter):
+        valid ={}
+        for req in requiered_parameter:
+            if req in parameter:
+                if len(parameter[req].encode('utf-8')) < 63:
+                    valid[req] = parameter[req]
+                else:
+                    return None
+            else:
+                return None
+        for opt in optional_parameter:
+            if opt in parameter:
+                if len(parameter[opt].encode('utf-8')) < 63:
+                    valid[opt] = parameter[opt]
+        
+        return valid
 
     #Check the request list
     def check_request(self, request, allowed):
+        valid = []
         for req in request:
-            if not req in allowed:
-                return False
-        return True
+            if req in allowed:
+                valid.append(req)
+        return valid
