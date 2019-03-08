@@ -35,8 +35,15 @@ class database_control(object):
     def disconnect(self):
         return self.database.disconnect()
 
-    def exist_user(self, chat_id):
-        return self.database.exist_user({'chat_id':chat_id})
+    def exist_user(self, chat_id, parameter):
+        requiered_parameter = []
+        optional_parameter = ['user_name']
+        parameter = self.check_parameter(parameter, requiered_parameter, optional_parameter)
+        if parameter is None:
+            error = {'status':ERROR_PARAMETER_NOT_VALID} 
+            return error
+        parameter['chat_id'] = chat_id
+        return self.database.exist_user(parameter)
 
     #Call the funktion to add a user if in the request is everything fine
     def add_user(self, chat_id, parameter):
@@ -293,7 +300,7 @@ class database_control(object):
         return result
         
     #Get all users of a home if the request is fine
-    def get_users(self,chat_id,parameter):
+    def get_user(self,chat_id,parameter):
         #Check if parameters are valid
         requiered_parameter = ['home_name']
         optional_parameter = []
@@ -371,7 +378,7 @@ class database_control(object):
         #Check if parameters are valid
         requiered_parameter = ['home_name','home_friends']
         optional_parameter = []
-        parmeter = self.check_parameter(parameter, requiered_parameter, optional_parameter)
+        parameter = self.check_parameter(parameter, requiered_parameter, optional_parameter)
         if parameter is None:
             error = {'status':ERROR_PARAMETER_NOT_VALID}
             return error

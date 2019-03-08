@@ -117,7 +117,6 @@ class database_api(object):
         
     #Add a new user to the user_table
     def add_user(self, parameter):
-        print(parameter)
         command = """INSERT INTO user_table(user_name, chat_id) VALUES(%s,%s)"""
         command_parameter = parameter['user_name'], parameter['chat_id']
         status = self.executeCommand(command, command_parameter, True)
