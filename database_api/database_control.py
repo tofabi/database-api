@@ -88,7 +88,7 @@ class database_control(object):
             return error
         
         #Check if the user want to delete himself
-        if parameter['user_name'] == None:
+        if len(parameter) == 0:
             #Delete user
             result2 = self.database.delete_user({'user_name':result['result'][0][0]})
             return result2
@@ -96,6 +96,14 @@ class database_control(object):
         #Check if the user is allowed to delete other users
         if not(result['result'][0][1] == 'admin'):
             error = {'status':ERROR_NO_PERMISSION}
+            return error
+
+        #Check if the to delete user exist
+        result = self.database.exist_user({'user_name':parameter['user_name']})
+        if result['status'] is not OK:
+            return result
+        if result['result'] == 'False':
+            error = {'status':ERROR_NOT_EXIST}
             return error
 
         #Delete user a admin
@@ -128,7 +136,7 @@ class database_control(object):
     #Delete a home if in the reqeust everything is fine
     def delete_home(self,chat_id, parameter):
         #Check if the parameters are valid
-        requiered_parameter = []
+        requiered_parameter = ['home_name']
         optional_parameter = []
         parameter = self.check_parameter(parameter, requiered_parameter, optional_parameter)
         if parameter is None:
@@ -210,6 +218,7 @@ class database_control(object):
             return result
         if len(result['result']) == 0:
             error = {'status':ERROR_NOT_EXIST}
+            return error
         
         #Check if the user has the permission to delete the device
         if not(chat_id == result['result'][0][0]):
@@ -265,7 +274,7 @@ class database_control(object):
         return result
 
     #Get all the homes in which the user owner or friend
-    def get_homes(self,chat_id,parameter,request):
+    def get_home(self,chat_id,parameter,request):
         #Check if parameters are valid
         requiered_parameter = []
         optional_parameter = ['home_name','gateway_ip']
@@ -361,7 +370,7 @@ class database_control(object):
         admin = self.database.get_from_user_table({'chat_id':chat_id},['rights'])
         if result['status'] is not OK:
             return admin
-        if admin['result'][0][0] is not 'admin':
+        if admin['result'][0][0] != 'admin':
             if not(result['result'][0][0] == chat_id):
                 error = {'status':ERROR_NO_PERMISSION}
                 return error
@@ -401,7 +410,7 @@ class database_control(object):
         admin = self.database.get_from_user_table({'chat_id':chat_id},['rights'])
         if result['status'] is not OK:
             return admin
-        if admin['result'][0][0] is not 'admin':
+        if admin['result'][0][0] != 'admin':
             if not(result['result'][0][0] == chat_id):
                 error = {'status':ERROR_NO_PERMISSION}
                 return error
@@ -444,7 +453,7 @@ class database_control(object):
         admin = self.database.get_from_user_table({'chat_id':chat_id},['rights'])
         if result['status'] is not OK:
             return admin
-        if admin['result'][0][0] is not 'admin':
+        if admin['result'][0][0] != 'admin':
             if not(result['result'][0][0] == chat_id):
                 error = {'status':ERROR_NO_PERMISSION}
                 return error
@@ -484,7 +493,7 @@ class database_control(object):
         admin = self.database.get_from_user_table({'chat_id':chat_id},['rights'])
         if result['status'] is not OK:
             return admin
-        if admin['result'][0][0] is not 'admin':
+        if admin['result'][0][0] != 'admin':
             if not(result['result'][0][0] == chat_id):
                 error = {'status':ERROR_NO_PERMISSION}
                 return error

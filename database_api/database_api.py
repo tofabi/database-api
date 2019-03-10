@@ -75,9 +75,9 @@ class database_api(object):
                     device_typ name,
                     device_location name,
                     home name,
-                    FOREIGN KEY (home) REFERENCES home_table (home_name),
+                    FOREIGN KEY (home) REFERENCES home_table (home_name) ON DELETE CASCADE,
                     device_owner name,
-                    FOREIGN KEY (device_owner) REFERENCES user_table (user_name),
+                    FOREIGN KEY (device_owner) REFERENCES user_table (user_name) ON DELETE CASCADE,
                     device_friends name ARRAY
                     )"""
         status = self.executeCommand(command, None, True)
@@ -89,7 +89,7 @@ class database_api(object):
                     home_name name PRIMARY KEY,
                     gateway_ip name,
                     home_owner name,
-                    FOREIGN KEY (home_owner) REFERENCES user_table (user_name),
+                    FOREIGN KEY (home_owner) REFERENCES user_table (user_name) ON DELETE CASCADE,
                     home_friends name ARRAY
                     )"""
         status = self.executeCommand(command, None, True)
@@ -117,15 +117,15 @@ class database_api(object):
         
     #Add a new user to the user_table
     def add_user(self, parameter):
-        command = """INSERT INTO user_table(user_name, chat_id) VALUES(%s,%s)"""
-        command_parameter = parameter['user_name'], parameter['chat_id']
+        command = """INSERT INTO user_table(user_name, chat_id, rights) VALUES(%s,%s,%s)"""
+        command_parameter = parameter['user_name'], parameter['chat_id'], parameter['rights']
         status = self.executeCommand(command, command_parameter, True)
         return status
 
     #Delete a user from user_table
     def delete_user(self, parameter):
-        command = "DELETE FROM user_table WHERE chat_id = %s"
-        command_parameter = parameter['chat_id'],
+        command = "DELETE FROM user_table WHERE user_name = %s"
+        command_parameter = parameter['user_name'],
         status = self.executeCommand(command, command_parameter, True)
         return status
     
