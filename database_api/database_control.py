@@ -20,13 +20,9 @@ class database_control(object):
     def connect(self):
         response = self.database.connect()
         if response['status'] is OK:
-            print('connect')
             status = self.database.createUserTable()
-            print(status)
             status = self.database.createHomeTable()
-            print(status)
             status = self.database.createDeviceTable()
-            print(status)
             return response
         else:
             return response
