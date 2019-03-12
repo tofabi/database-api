@@ -3,7 +3,7 @@ The task of the database-api is to manage the database entries of the Smart Home
 
 ##Interface
 The database_api get interfaced by AMQP. With different queues you are able to call the following commands.
-* user_exist
+* exist_user
 * add_user
 * delete_user
 * add_home
@@ -14,12 +14,15 @@ The database_api get interfaced by AMQP. With different queues you are able to c
 * get_homes
 * get_users
 
-### user_exist
+### exist_user
 This command allows you to check if a user already exist in the database.
 
 Required json Payload:
+````
+"{'chat_id':'123456','parameter':{}}"
+````
 
-    "{'chat_id':'123456'}"
+Optional a parameter user_name can be added then the user_name get checked.
 
 Json result:
 
@@ -44,7 +47,7 @@ Required json Payload:
 
     "{'chat_id':'123456','parameter':{}"
 
-If you are admin and you want to delete another user add the 'user_name' to the parameter.
+If you are admin and you want to delete another user add the `user_name` to the parameter.
 
 Json result:
 
@@ -113,7 +116,6 @@ possible request_items:
 * device_typ
 * device_location
 * home_name
-* device_owner
 * device_friends
 * home_owner
 * chat_id
@@ -121,7 +123,7 @@ possible request_items:
 
 Json result:
 
-    "{'status':'ok','result':[[column1],[column2],..],'result2':[[column1],[column2],..]}"
+    "{'status':'ok','result':[[row1],[row2],..],'result2':[[row1],[row2],..]}"
 
 result will be the devices in which you are device_owner and result2 will be the devices in which you are a friend.
 
@@ -144,11 +146,11 @@ possible request_items:
 * home_friends
 
 Json result:
-    "{'status':'ok','result':[[column1],[column2],..],'result2':[[column1],[column2],..]}"
+    "{'status':'ok','result':[[row1],[row2],..],'result2':[[row1],[row2],..]}"
 
 result will be the homes in which you are home_owner and result2 will be the homes in which you are a friend.
 
-### get_users
+<!-- ### get_users
 This command allows you to get all the users of a home.
 
 Required json Payload:
@@ -157,4 +159,4 @@ Required json Payload:
 
 Json result:
 
-    "{'status':'ok','result':[[home_owner, [home_friends]]]}"
+    "{'status':'ok','result':[[home_owner, [home_friends]]]}" -->
