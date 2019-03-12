@@ -1,7 +1,7 @@
 # database-api
 The task of the database-api is to manage the database entries of the Smart Home Chatbot. It include the validation of parameters, the authorization and the execution.
 
-##Interface
+## Interface
 The database_api get interfaced by AMQP. With different queues you are able to call the following commands.
 * exist_user
 * add_user
@@ -131,6 +131,7 @@ result will be the devices in which you are device_owner and result2 will be the
 This command allows you to get data of the home_table.
 
 Required json Payload:
+
     "{'chat_id':'123456','parameter':{search_parameter},'request':[request_items]}"
 
 possible search_parameter:
@@ -146,6 +147,7 @@ possible request_items:
 * home_friends
 
 Json result:
+
     "{'status':'ok','result':[[row1],[row2],..],'result2':[[row1],[row2],..]}"
 
 result will be the homes in which you are home_owner and result2 will be the homes in which you are a friend.
