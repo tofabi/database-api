@@ -189,7 +189,7 @@ class database_control(object):
         if len(result['result']) == 0:
             error = {'status':ERROR_HOME_NOT_EXIST}
             return error
-        if not ((result['result'][0][0] == user['result'][0][0]) or (user['result'][0][0] in result['result'][0][1])):
+        if not ((result['result'][0][0] == user['result'][0][0]) or ((result['result'][0][1]) != None) and (user['result'][0][0] in result['result'][0][1])):
             error = {'status':ERROR_NO_PERMISSION}
             return error
         
